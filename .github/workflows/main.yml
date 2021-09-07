@@ -31,7 +31,7 @@ jobs:
         run: pip install requests
       
       - name: Run script
-        run: python main.py ${{ github.event.inputs.GLOSSARY_DEF_FILE }}
+        run: python main.py "${{ github.event.inputs.GLOSSARY_DEF_FILE }}"
         
       - name: Publishing
         run: |
