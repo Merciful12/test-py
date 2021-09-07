@@ -1,9 +1,9 @@
-from html import HTML
+import requests
 import os
 
-h = HTML()
-h.p(sys.argv[1])
+r = requests.get('http://worldclockapi.com/api/json/est/now')
+print(r.text)
 
 with open('index.html', 'w+') as f:
-  f.write(h)
+  f.write('<h1>' + sys.argv[1] + '</h1>')
 
