@@ -8,7 +8,7 @@ on:
   workflow_dispatch: 
     inputs:
       GLOSSARY_DEF_FILE:
-        required: true
+        required: false
         description: GLOSSARY_DEF_FILE
       branch:
         required: false
@@ -27,11 +27,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2.2.2
+      
       - name: Install deps
         run: pip install requests
       
       - name: Run script
-        run: python main.py "${{ github.event.inputs.GLOSSARY_DEF_FILE }}"
+        run: python main.py "${{ github.event.inputs.GLOSSARY_DEF_FILE || "test" }}"
         
       - name: Publishing
         run: |
