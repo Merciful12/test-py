@@ -28,7 +28,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2.2.2
       - name: Deps
-        run: pip install html
+        run: pip install requests
         
       - name: Run script
         run: python main.py ${{ inputs.GLOSSARY_DEF_FILE }}
