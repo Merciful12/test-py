@@ -10,13 +10,12 @@ on:
   workflow_dispatch: 
     inputs:
       GLOSSARY_DEF_FILE:
-        required: false
+        required: true
         description: GLOSSARY_DEF_FILE
         default: test
       branch:
         required: false
         description: branch to publish
-        default: gh-pages
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -33,9 +32,17 @@ jobs:
       
       - name: Install deps
         run: pip install requests
-      
+        
+      - name: Set variables
+        env:
+          DEFAULT_GLOSSARY_DEF_FILE: test
+          DEFAULT_BRANCH: gh-pages
+        run: |
+          echo "GLOSSARY_DEF_FILE=${{ github.event.inputs.GLOSSARY_DEF_FILE || env.DEFAULT_GLOSSARY_DEF_FILE }}" >> $GITHUB_ENV
+          echo "BRANCH=${{ github.event.inputs.branch || env.DEFAULT_BRANCH }}" >> $GITHUB_ENV
+
       - name: Run script
-        run: python main.py "${{ github.event.inputs.GLOSSARY_DEF_FILE }}"
+        run: python main.py "${{ env.GLOSSARY_DEF_FILE }}"
         
       - name: Publishing
         run: |
@@ -47,5 +54,5 @@ jobs:
           git config --local user.name "${{ github.actor }}"
           git add .
           git commit -m "Add changes" -a
-          git push -f https://${{ secrets.ACCESS_TOKEN }}@github.com/${{ github.repository}}.git master:${{ github.event.inputs.branch }}
+          git push -f https://${{ secrets.ACCESS_TOKEN }}@github.com/${{ github.repository}}.git master:${{ env.BRANCH }}
           echo DONE
