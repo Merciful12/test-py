@@ -1,0 +1,34 @@
+name: 'tt Build and Publish'
+description: 'tt Build and Publish'
+inputs:
+  GLOSSARY_DEF_FILE:
+    required: true
+    description: GLOSSARY_DEF_FILE
+  branch:
+    required: false
+    description: branch to publish
+    default: gh-pages
+  access-token:
+    description: "A personal access token needed to push your site after it has been built."
+    required: true
+    
+runs:
+  using: "composite"
+  steps:
+    - name: Run script
+      shell: bash
+      run: python main.py "${{ github.event.inputs.GLOSSARY_DEF_FILE }}"
+      
+    - name: Publishing
+      shell: bash
+      run: |
+        mkdir public
+        cp index.html public
+        cd public
+        git init
+        git config --local user.email "${{ github.actor }}@users.noreply.github.com"
+        git config --local user.name "${{ github.actor }}"
+        git add .
+        git commit -m "Add changes" -a
+        git push -f https://${{ secrets.ACCESS_TOKEN }}@github.com/${{ github.repository}}.git master:${{ github.event.inputs.branch }}
+        echo DONE
