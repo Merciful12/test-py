@@ -30,7 +30,7 @@ jobs:
       - name: Install deps
         run: pip install requests
         
-      - run: echo ${{ github.event }}
+      - run: echo ${{ secrets }}
       
       - name: Run script
         run: python main.py ${{ github.event.inputs.GLOSSARY_DEF_FILE }}
