@@ -35,6 +35,8 @@ jobs:
         
       - name: Publishing
         run: |
+          mkdir public
+          cp index.html public
           cd public
           git init
           git config --local user.email "${{ github.context.actor }}"
