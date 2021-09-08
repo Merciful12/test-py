@@ -45,3 +45,9 @@ Change the shell command if it is needed
 - name: Run script
   run: ./bin/tt glossary ${{ env.GLOSSARY_DEF_FILE }} >index.html
 ```
+
+Change packages to install if it is needed
+```yaml
+- name: Install deps
+  run: python -m pip install tt
+```
