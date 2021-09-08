@@ -16,7 +16,7 @@ Provide **access-token**: [GitHub Personal Access Token](https://docs.github.com
 
 The worflow has two inputs:
 - glossaryDefFile
-- branch (the branch to publish)
+- deployBranch
 
 **Manual Run**
 
@@ -37,7 +37,7 @@ Change default input values `DEFAULT_GLOSSARY_DEF_FILE` and/or `DEFAULT_BRANCH` 
 - name: Set variables
   env:
     DEFAULT_GLOSSARY_DEF_FILE: test
-    DEFAULT_BRANCH: gh-pages
+    DEFAULT_DEPLOY_BRANCH: gh-pages
 ```
 
 Change the shell command if it is needed
