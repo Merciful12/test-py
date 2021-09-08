@@ -12,7 +12,7 @@ on:
         description: glossaryDefFile
       deployBranch:
         required: false
-        description: branch to publish
+        description: This is where the output of script will be pushed to.
 
 
 jobs:
