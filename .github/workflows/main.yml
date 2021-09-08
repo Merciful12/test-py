@@ -10,7 +10,7 @@ on:
       glossaryDefFile:
         required: true
         description: glossaryDefFile
-      branch:
+      deployBranch:
         required: false
         description: branch to publish
 
@@ -29,10 +29,10 @@ jobs:
       - name: Set variables
         env:
           DEFAULT_GLOSSARY_DEF_FILE: test
-          DEFAULT_BRANCH: gh-pages
+          DEFAULT_DEPLOY_BRANCH: gh-pages
         run: |
           echo "GLOSSARY_DEF_FILE=${{ github.event.inputs.glossaryDefFile || env.DEFAULT_GLOSSARY_DEF_FILE }}" >> $GITHUB_ENV
-          echo "BRANCH=${{ github.event.inputs.branch || env.DEFAULT_BRANCH }}" >> $GITHUB_ENV
+          echo "DEPLOY_BRANCH=${{ github.event.inputs.deployBranch || env.DEFAULT_DEPLOY_BRANCH }}" >> $GITHUB_ENV
 
       - name: Run script
         run: tt glossary ${{ env.GLOSSARY_DEF_FILE }} >index.html
@@ -47,5 +47,5 @@ jobs:
           git config --local user.name "${{ github.actor }}"
           git add .
           git commit -m "Add changes" -a
-          git push -f https://${{ secrets.ACCESS_TOKEN }}@github.com/${{ github.repository}}.git master:${{ env.BRANCH }}
+          git push -f https://${{ secrets.ACCESS_TOKEN }}@github.com/${{ github.repository}}.git master:${{ env.DEPLOY_BRANCH }}
           echo DONE
