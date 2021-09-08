@@ -24,7 +24,7 @@ jobs:
       - uses: actions/setup-python@v2.2.2
       
       - name: Install deps
-        run: python pip -m install tt
+        run: python -m pip install tt
         
       - name: Set variables
         env:
