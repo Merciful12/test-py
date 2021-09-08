@@ -23,8 +23,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2.2.2
       
-      - name: Install deps
-        run: python -m pip install tt
+      # - name: Install deps
+      #  run: python -m pip install tt
         
       - name: Set variables
         env:
@@ -35,7 +35,7 @@ jobs:
           echo "DEPLOY_BRANCH=${{ github.event.inputs.deployBranch || env.DEFAULT_DEPLOY_BRANCH }}" >> $GITHUB_ENV
 
       - name: Run script
-        run: tt glossary ${{ env.GLOSSARY_DEF_FILE }} >index.html
+        run: ./bin/tt glossary ${{ env.GLOSSARY_DEF_FILE }} >index.html
         
       - name: Publishing
         run: |
