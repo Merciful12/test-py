@@ -1,6 +1,4 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
+name: tt Run and Publish
 
 # Controls when the workflow will run
 on:
@@ -9,40 +7,35 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch: 
     inputs:
-      GLOSSARY_DEF_FILE:
+      glossaryDefFile:
         required: true
-        description: GLOSSARY_DEF_FILE
-        default: test
+        description: glossaryDefFile
       branch:
         required: false
         description: branch to publish
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2.2.2
       
       - name: Install deps
-        run: pip install requests
+        run: pip install tt
         
       - name: Set variables
         env:
           DEFAULT_GLOSSARY_DEF_FILE: test
           DEFAULT_BRANCH: gh-pages
         run: |
-          echo "GLOSSARY_DEF_FILE=${{ github.event.inputs.GLOSSARY_DEF_FILE || env.DEFAULT_GLOSSARY_DEF_FILE }}" >> $GITHUB_ENV
+          echo "GLOSSARY_DEF_FILE=${{ github.event.inputs.glossaryDefFile || env.DEFAULT_GLOSSARY_DEF_FILE }}" >> $GITHUB_ENV
           echo "BRANCH=${{ github.event.inputs.branch || env.DEFAULT_BRANCH }}" >> $GITHUB_ENV
 
       - name: Run script
-        run: python main.py "${{ env.GLOSSARY_DEF_FILE }}"
+        run: tt glossary ${{ env.GLOSSARY_DEF_FILE }} >index.html
         
       - name: Publishing
         run: |
