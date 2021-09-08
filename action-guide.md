@@ -43,5 +43,5 @@ Change default input values `DEFAULT_GLOSSARY_DEF_FILE` and/or `DEFAULT_BRANCH` 
 Change the shell command if it is needed
 ```yaml
 - name: Run script
-  run: tt glossary ${{ env.GLOSSARY_DEF_FILE }} >index.html
+  run: ./bin/tt glossary ${{ env.GLOSSARY_DEF_FILE }} >index.html
 ```
